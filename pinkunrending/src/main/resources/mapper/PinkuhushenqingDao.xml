@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.PinkuhushenqingDao">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        a.id as id
+        ,a.yonghu_id as yonghuId
+        ,a.pinkuhushenqing_uuid_number as pinkuhushenqingUuidNumber
+        ,a.pinkuhushenqing_name as pinkuhushenqingName
+        ,a.sex_types as sexTypes
+        ,a.age as age
+        ,a.zhengzhi_types as zhengzhiTypes
+        ,a.pinkuhushenqing_shenfenzheng_phone as pinkuhushenqingShenfenzhengPhone
+        ,a.pinkuhushenqing_shenfenzheng_id_number as pinkuhushenqingShenfenzhengIdNumber
+        ,a.pinkuhushenqing_shenfenzheng_renxiang_photo as pinkuhushenqingShenfenzhengRenxiangPhoto
+        ,a.pinkuhushenqing_shenfenzheng_guohui_photo as pinkuhushenqingShenfenzhengGuohuiPhoto
+        ,a.pinkuhushenqing_shenqing_types as pinkuhushenqingShenqingTypes
+        ,a.pinkuhushenqing_juweihui_file as pinkuhushenqingJuweihuiFile
+        ,a.pinkuhushenqing_content as pinkuhushenqingContent
+        ,a.insert_time as insertTime
+        ,a.pinkuhushenqing_yi_jieguo as pinkuhushenqingYiJieguo
+        ,a.pinkuhushenqing_yi_yijian as pinkuhushenqingYiYijian
+        ,a.pinkuhushenqing_yi_time as pinkuhushenqingYiTime
+        ,a.pinkuhushenqing_er_jieguo as pinkuhushenqingErJieguo
+        ,a.pinkuhushenqing_er_yijian as pinkuhushenqingErYijian
+        ,a.pinkuhushenqing_er_time as pinkuhushenqingErTime
+        ,a.pinkuhushenqing_san_jieguo as pinkuhushenqingSanJieguo
+        ,a.pinkuhushenqing_san_yijian as pinkuhushenqingSanYijian
+        ,a.pinkuhushenqing_san_time as pinkuhushenqingSanTime
+        ,a.create_time as createTime
+    </sql>
+    <select id="selectListView" parameterType="map" resultType="com.entity.view.PinkuhushenqingView" >
+        SELECT
+        <include refid="Base_Column_List" />
+
+--         级联表的字段
+        ,yonghu.yonghu_name as yonghuName
+        ,yonghu.yonghu_phone as yonghuPhone
+        ,yonghu.yonghu_id_number as yonghuIdNumber
+        ,yonghu.yonghu_photo as yonghuPhoto
+        ,yonghu.yonghu_email as yonghuEmail
+
+        FROM pinkuhushenqing  a
+        left JOIN yonghu yonghu ON a.yonghu_id = yonghu.id
+
+        <where>
+            <if test="params.ids != null">
+                and a.id in
+                <foreach item="item" index="index" collection="params.ids" open="(" separator="," close=")">
+                #{item}
+                </foreach>
+            </if>
+            <if test="params.yonghuId != null and params.yonghuId != ''">
+                and (
+                    a.yonghu_id = #{params.yonghuId}
+                )
+            </if>
+            <if test=" params.pinkuhushenqingUuidNumber != '' and params.pinkuhushenqingUuidNumber != null and params.pinkuhushenqingUuidNumber != 'null' ">
+                and a.pinkuhushenqing_uuid_number like CONCAT('%',#{params.pinkuhushenqingUuidNumber},'%')
+            </if>
+            <if test=" params.pinkuhushenqingName != '' and params.pinkuhushenqingName != null and params.pinkuhushenqingName != 'null' ">
+                and a.pinkuhushenqing_name like CONCAT('%',#{params.pinkuhushenqingName},'%')
+            </if>
+            <if test="params.sexTypes != null and params.sexTypes != ''">
+                and a.sex_types = #{params.sexTypes}
+            </if>
+            <if test="params.ageStart != null and params.ageStart != ''">
+                <![CDATA[  and a.age >= #{params.ageStart}   ]]>
+            </if>
+            <if test="params.ageEnd != null and params.ageEnd != ''">
+                <![CDATA[  and a.age <= #{params.ageEnd}   ]]>
+            </if>
+             <if test="params.age != null and params.age != ''">
+                and a.age = #{params.age}
+             </if>
+            <if test="params.zhengzhiTypes != null and params.zhengzhiTypes != ''">
+                and a.zhengzhi_types = #{params.zhengzhiTypes}
+            </if>
+            <if test=" params.pinkuhushenqingShenfenzhengPhone != '' and params.pinkuhushenqingShenfenzhengPhone != null and params.pinkuhushenqingShenfenzhengPhone != 'null' ">
+                and a.pinkuhushenqing_shenfenzheng_phone like CONCAT('%',#{params.pinkuhushenqingShenfenzhengPhone},'%')
+            </if>
+            <if test=" params.pinkuhushenqingShenfenzhengIdNumber != '' and params.pinkuhushenqingShenfenzhengIdNumber != null and params.pinkuhushenqingShenfenzhengIdNumber != 'null' ">
+                and a.pinkuhushenqing_shenfenzheng_id_number like CONCAT('%',#{params.pinkuhushenqingShenfenzhengIdNumber},'%')
+            </if>
+            <if test="params.pinkuhushenqingShenqingTypes != null and params.pinkuhushenqingShenqingTypes != ''">
+                and a.pinkuhushenqing_shenqing_types = #{params.pinkuhushenqingShenqingTypes}
+            </if>
+            <if test=" params.pinkuhushenqingContent != '' and params.pinkuhushenqingContent != null and params.pinkuhushenqingContent != 'null' ">
+                and a.pinkuhushenqing_content like CONCAT('%',#{params.pinkuhushenqingContent},'%')
+            </if>
+            <if test=" params.insertTimeStart != '' and params.insertTimeStart != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.insert_time) >= UNIX_TIMESTAMP(#{params.insertTimeStart}) ]]>
+            </if>
+            <if test=" params.insertTimeEnd != '' and params.insertTimeEnd != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.insert_time) <= UNIX_TIMESTAMP(#{params.insertTimeEnd}) ]]>
+            </if>
+            <if test=" params.pinkuhushenqingYiJieguo != '' and params.pinkuhushenqingYiJieguo != null and params.pinkuhushenqingYiJieguo != 'null' ">
+                and a.pinkuhushenqing_yi_jieguo like CONCAT('%',#{params.pinkuhushenqingYiJieguo},'%')
+            </if>
+            <if test=" params.pinkuhushenqingYiYijian != '' and params.pinkuhushenqingYiYijian != null and params.pinkuhushenqingYiYijian != 'null' ">
+                and a.pinkuhushenqing_yi_yijian like CONCAT('%',#{params.pinkuhushenqingYiYijian},'%')
+            </if>
+            <if test=" params.pinkuhushenqingYiTimeStart != '' and params.pinkuhushenqingYiTimeStart != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.pinkuhushenqing_yi_time) >= UNIX_TIMESTAMP(#{params.pinkuhushenqingYiTimeStart}) ]]>
+            </if>
+            <if test=" params.pinkuhushenqingYiTimeEnd != '' and params.pinkuhushenqingYiTimeEnd != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.pinkuhushenqing_yi_time) <= UNIX_TIMESTAMP(#{params.pinkuhushenqingYiTimeEnd}) ]]>
+            </if>
+            <if test=" params.pinkuhushenqingErJieguo != '' and params.pinkuhushenqingErJieguo != null and params.pinkuhushenqingErJieguo != 'null' ">
+                and a.pinkuhushenqing_er_jieguo like CONCAT('%',#{params.pinkuhushenqingErJieguo},'%')
+            </if>
+            <if test=" params.pinkuhushenqingErYijian != '' and params.pinkuhushenqingErYijian != null and params.pinkuhushenqingErYijian != 'null' ">
+                and a.pinkuhushenqing_er_yijian like CONCAT('%',#{params.pinkuhushenqingErYijian},'%')
+            </if>
+            <if test=" params.pinkuhushenqingErTimeStart != '' and params.pinkuhushenqingErTimeStart != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.pinkuhushenqing_er_time) >= UNIX_TIMESTAMP(#{params.pinkuhushenqingErTimeStart}) ]]>
+            </if>
+            <if test=" params.pinkuhushenqingErTimeEnd != '' and params.pinkuhushenqingErTimeEnd != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.pinkuhushenqing_er_time) <= UNIX_TIMESTAMP(#{params.pinkuhushenqingErTimeEnd}) ]]>
+            </if>
+            <if test=" params.pinkuhushenqingSanJieguo != '' and params.pinkuhushenqingSanJieguo != null and params.pinkuhushenqingSanJieguo != 'null' ">
+                and a.pinkuhushenqing_san_jieguo like CONCAT('%',#{params.pinkuhushenqingSanJieguo},'%')
+            </if>
+            <if test=" params.pinkuhushenqingSanYijian != '' and params.pinkuhushenqingSanYijian != null and params.pinkuhushenqingSanYijian != 'null' ">
+                and a.pinkuhushenqing_san_yijian like CONCAT('%',#{params.pinkuhushenqingSanYijian},'%')
+            </if>
+            <if test=" params.pinkuhushenqingSanTimeStart != '' and params.pinkuhushenqingSanTimeStart != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.pinkuhushenqing_san_time) >= UNIX_TIMESTAMP(#{params.pinkuhushenqingSanTimeStart}) ]]>
+            </if>
+            <if test=" params.pinkuhushenqingSanTimeEnd != '' and params.pinkuhushenqingSanTimeEnd != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.pinkuhushenqing_san_time) <= UNIX_TIMESTAMP(#{params.pinkuhushenqingSanTimeEnd}) ]]>
+            </if>
+
+                <!-- 判断用户的id不为空 -->
+            <if test=" params.yonghuIdNotNull != '' and params.yonghuIdNotNull != null and params.yonghuIdNotNull != 'null' ">
+                and a.yonghu_id IS NOT NULL
+            </if>
+            <if test=" params.yonghuName != '' and params.yonghuName != null and params.yonghuName != 'null' ">
+                and yonghu.yonghu_name like CONCAT('%',#{params.yonghuName},'%')
+            </if>
+            <if test=" params.yonghuPhone != '' and params.yonghuPhone != null and params.yonghuPhone != 'null' ">
+                and yonghu.yonghu_phone like CONCAT('%',#{params.yonghuPhone},'%')
+            </if>
+            <if test=" params.yonghuIdNumber != '' and params.yonghuIdNumber != null and params.yonghuIdNumber != 'null' ">
+                and yonghu.yonghu_id_number like CONCAT('%',#{params.yonghuIdNumber},'%')
+            </if>
+            <if test=" params.yonghuEmail != '' and params.yonghuEmail != null and params.yonghuEmail != 'null' ">
+                and yonghu.yonghu_email like CONCAT('%',#{params.yonghuEmail},'%')
+            </if>
+        </where>
+
+        order by a.${params.orderBy} desc 
+    </select>
+
+</mapper>

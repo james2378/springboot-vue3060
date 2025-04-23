@@ -1,0 +1,209 @@
+package com.entity.vo;
+
+import com.entity.ErjidanweiEntity;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.Date;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.io.Serializable;
+
+/**
+ * 二级单位
+ * 手机端接口返回实体辅助类
+ * （主要作用去除一些不必要的字段）
+ */
+@TableName("erjidanwei")
+public class ErjidanweiVO implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+
+    /**
+     * 主键
+     */
+
+    @TableField(value = "id")
+    private Integer id;
+
+
+    /**
+     * 账户
+     */
+
+    @TableField(value = "username")
+    private String username;
+
+
+    /**
+     * 密码
+     */
+
+    @TableField(value = "password")
+    private String password;
+
+
+    /**
+     * 二级单位名称
+     */
+
+    @TableField(value = "erjidanwei_name")
+    private String erjidanweiName;
+
+
+    /**
+     * 二级单位联系方式
+     */
+
+    @TableField(value = "erjidanwei_phone")
+    private String erjidanweiPhone;
+
+
+    /**
+     * 二级单位邮箱
+     */
+
+    @TableField(value = "erjidanwei_email")
+    private String erjidanweiEmail;
+
+
+    /**
+     * 二级单位介绍
+     */
+
+    @TableField(value = "erjidanwei_content")
+    private String erjidanweiContent;
+
+
+    /**
+     * 创建时间
+     */
+    @JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
+	@DateTimeFormat
+
+    @TableField(value = "create_time")
+    private Date createTime;
+
+
+    /**
+	 * 设置：主键
+	 */
+    public Integer getId() {
+        return id;
+    }
+
+
+    /**
+	 * 获取：主键
+	 */
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+    /**
+	 * 设置：账户
+	 */
+    public String getUsername() {
+        return username;
+    }
+
+
+    /**
+	 * 获取：账户
+	 */
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    /**
+	 * 设置：密码
+	 */
+    public String getPassword() {
+        return password;
+    }
+
+
+    /**
+	 * 获取：密码
+	 */
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    /**
+	 * 设置：二级单位名称
+	 */
+    public String getErjidanweiName() {
+        return erjidanweiName;
+    }
+
+
+    /**
+	 * 获取：二级单位名称
+	 */
+
+    public void setErjidanweiName(String erjidanweiName) {
+        this.erjidanweiName = erjidanweiName;
+    }
+    /**
+	 * 设置：二级单位联系方式
+	 */
+    public String getErjidanweiPhone() {
+        return erjidanweiPhone;
+    }
+
+
+    /**
+	 * 获取：二级单位联系方式
+	 */
+
+    public void setErjidanweiPhone(String erjidanweiPhone) {
+        this.erjidanweiPhone = erjidanweiPhone;
+    }
+    /**
+	 * 设置：二级单位邮箱
+	 */
+    public String getErjidanweiEmail() {
+        return erjidanweiEmail;
+    }
+
+
+    /**
+	 * 获取：二级单位邮箱
+	 */
+
+    public void setErjidanweiEmail(String erjidanweiEmail) {
+        this.erjidanweiEmail = erjidanweiEmail;
+    }
+    /**
+	 * 设置：二级单位介绍
+	 */
+    public String getErjidanweiContent() {
+        return erjidanweiContent;
+    }
+
+
+    /**
+	 * 获取：二级单位介绍
+	 */
+
+    public void setErjidanweiContent(String erjidanweiContent) {
+        this.erjidanweiContent = erjidanweiContent;
+    }
+    /**
+	 * 设置：创建时间
+	 */
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+
+    /**
+	 * 获取：创建时间
+	 */
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+}
